@@ -84,7 +84,9 @@ public class Pelota extends GOval{
 			yVelocidad*=-1;
 		}
 		if(getY() > _arkanoid.getHeight() - getHeight()){
+			_arkanoid.pelota1.setLocation(0,_arkanoid.getHeight()*0.70 - _arkanoid.pelota1.getHeight());
 			yVelocidad*=-1;
+			_arkanoid.partida.actualizaVidas(1);
 		}	
 		/*Vamos a crear un método genérico que sirva para chequear los choques de la bola contra
 		 * ladrillos y contra el cursor. Le vamos a pasar un parámetro que van a ser las
@@ -124,18 +126,40 @@ public class Pelota extends GOval{
 		if(auxiliar instanceof Ladrillo){
 			//Sí la y del ladrillo (auxiliar) es igual a la posición Y de la bola, o la y del ladrillo
 			//más la altura del ladrillo es igual a la posición y de la bola.
-			if(auxiliar.getY() ==  posY || auxiliar.getY()+auxiliar.getHeight() == posY){
+
+			if(auxiliar.getY() <= posY && auxiliar.getX() <= posX || 
+					auxiliar.getY()+auxiliar.getHeight() >= posY && auxiliar.getX()+auxiliar.getWidth() <= posX){
+				yVelocidad*=-1;
+				xVelocidad*=-1;
+			}
+
+			/*if(auxiliar.getY() <=  posY && auxiliar.getY()+auxiliar.getHeight() >= posY){
 				yVelocidad*=-1;
 			}else if(auxiliar.getX() == posX || auxiliar.getX() + auxiliar.getWidth() == posX){
 				xVelocidad*=-1;
-			}
+			}*/
 			_arkanoid.remove(auxiliar);
 			//esta parte hace la operación que suma los puntos en el marcador.
 			_arkanoid.marcador.actualizaMarcador(1);
 			noHaChocado=false;
 			//Chequeamos la presencia de la barra.
 		}else if(auxiliar instanceof Barra){
-			yVelocidad*=-1;
+			//Vamos a modificar el rebote de la bola con el cursor para que no sea siempre el mismo.
+			//Vamos a dividir el cursor en tres partes.
+			//Calculamos la posición X del punto central de la bola.
+			double centroBola=getX() + getWidth()/2;
+
+			if(centroBola<auxiliar.getX()+auxiliar.getWidth()/5 ||
+					centroBola>auxiliar.getX()+2*auxiliar.getWidth()/5){
+				yVelocidad=-0.3;
+				xVelocidad=-1.5;
+			}else if(centroBola>auxiliar.getX()+auxiliar.getWidth()/5 && centroBola<auxiliar.getX()+auxiliar.getWidth()/3 ||
+					centroBola<auxiliar.getX()+2*auxiliar.getWidth()/5 && centroBola>auxiliar.getX()+2*auxiliar.getWidth()/3){
+				yVelocidad=-0.6;
+				xVelocidad=-1.5;
+			}else{
+				yVelocidad=-1;
+			}
 			//Cambiamos el valor del booleano.
 			noHaChocado=false;
 		}

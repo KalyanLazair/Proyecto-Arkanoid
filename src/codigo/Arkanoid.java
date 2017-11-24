@@ -33,7 +33,15 @@ public class Arkanoid extends acm.program.GraphicsProgram{
 	
 	//El sistema del marcador.
 	
-	Marcador marcador = new Marcador(20,40,Color.white);
+	Marcador marcador = new Marcador(60,40,Color.white);
+	
+	Marcador partida = new Marcador(40,40, Color.white);
+	
+	//Pantalla de Game Over.
+	
+	GRect gameover = new GRect(400, 100);
+	GLabel go = new GLabel("");
+
 	
 	
 	
@@ -52,19 +60,28 @@ public class Arkanoid extends acm.program.GraphicsProgram{
 		lateral.setFilled(true);
 		add (lateral,getWidth()-espacioMenu -lateral.getWidth()-pelota1.getWidth(), 0);
 		
-		
+		//Atributos de la pantalla de Game Over.
+		gameover.setFilled(true);
+		go.setLabel("GAME OVER");
+		go.setColor(Color.white);
+		go.setFont(new Font("Verdana", Font.BOLD, 46));
+
 	}
 	
 	public void run(){
-		dibujaNivel01();
-		//dibujaNivel02();
+		//dibujaNivel01();
+		dibujaNivel02();
 		//Llamamos al método DIBUJA en la clase Marcador. Esto nos mete los DOS add en su orden correcto.
 		marcador.dibuja(this);
-		//add (marcador, 5,0);
-		//add(marcador.texto, 0,20);
-		while (true){
+	    partida.dibuja2(this);
+		while (partida.vidas>=0){
 			pelota1.muevete(this);
 			pause(5);
+			
+			if(partida.vidas<0){
+				add(gameover, 100, 200);
+			    add(go, 150, 270);
+			}
 		}
 	}
 	
@@ -98,5 +115,7 @@ public class Arkanoid extends acm.program.GraphicsProgram{
 			}
 		}
 	}
+	
+	
 
 }
