@@ -81,9 +81,8 @@ public class Arkanoid extends acm.program.GraphicsProgram{
 		//Llamamos al método DIBUJA en la clase Marcador. Esto nos mete los DOS add en su orden correcto.
 		marcador.dibuja(this);
 		partida.dibuja2(this); 
-		
 			while (partida.vidas>=0){
-				pelota1.muevete(this);
+			    pelota1.muevete(this);
 				pause(4);
 				/*if(marcador.puntuacion < 3){
 					dibujaNivel01();
@@ -94,6 +93,7 @@ public class Arkanoid extends acm.program.GraphicsProgram{
 					add(go, 150, 270);
 				}
 			}
+		
 		
 	}
 		
@@ -131,7 +131,8 @@ public class Arkanoid extends acm.program.GraphicsProgram{
 		}
 	}
 	
-public void 
+	
+	
 	
 
 }

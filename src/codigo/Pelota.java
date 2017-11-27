@@ -10,6 +10,7 @@
 package codigo;
 
 import java.awt.Color;
+import java.awt.event.MouseEvent;
 import java.util.Random;
 
 import acm.graphics.GObject;
@@ -23,6 +24,7 @@ public class Pelota extends GOval{
 	double yVelocidad = -1; //velocidad en el eje y. Menos 3 porque es ascendente.	
 	
 	RandomGenerator aleatorio = new RandomGenerator();
+	
 	/**
 	 * Este es el constructor básico que es idéntido al de la clase GOval.
 	 * @param ancho
@@ -106,11 +108,10 @@ public class Pelota extends GOval{
 				}				
 			}
 		}
-		
-		move(xVelocidad,yVelocidad);
+		//move(xVelocidad,yVelocidad);
+		_arkanoid.addMouseListeners();
 	}
 	
-
 
 	/*Queremos el método lo más genérico posible. Le preguntamos si hay algo, entonces rebota. No
 	 * hay nada, sigue. GObject en ACM es la madre de todos los objetos gráficos. Un GRect es hijo
@@ -178,5 +179,10 @@ public class Pelota extends GOval{
 		}
 		return noHaChocado;
 	}
+	
+	public void mouseClicked(MouseEvent evento){
+		move(xVelocidad,yVelocidad);
+	}
+	
 	
 }
