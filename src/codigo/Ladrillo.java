@@ -8,9 +8,12 @@ package codigo;
 import java.awt.Color;
 
 import acm.graphics.*;
+import acm.util.RandomGenerator;
 
 public class Ladrillo extends GRect{
 	
+	
+
 	/**
 	 * Construye un ladrillo
 	 * 

@@ -12,14 +12,20 @@ package codigo;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.MouseEvent;
+import java.util.Random;
 
 import acm.graphics.*;
+import acm.util.RandomGenerator;
 
 public class Arkanoid extends acm.program.GraphicsProgram{
 	
 	//En instancia llamamos a la clase Pelota que hemos creado.
 	Pelota pelota1= new Pelota(10,Color.cyan);
-	Pelota pelota2= new Pelota(30,30);
+	Pelota bonus= new Pelota(4, Color.MAGENTA);
+	
+	//Bonus bonus= new Bonus(getWidth()-getWidth()/2, getHeight(), 10, 10, Color.MAGENTA);
+	
+	
 	//crea el cursor del juego.
 	Barra barra1 = new Barra(60, 20, Color.red);
 	//Declaramos los ladrillos en instancia en Arkanoid por si queremos modificar las dimensiones.
@@ -45,7 +51,7 @@ public class Arkanoid extends acm.program.GraphicsProgram{
 	
 	
 	
-	
+
 
 	
 	public void init(){
@@ -65,25 +71,34 @@ public class Arkanoid extends acm.program.GraphicsProgram{
 		go.setLabel("GAME OVER");
 		go.setColor(Color.white);
 		go.setFont(new Font("Verdana", Font.BOLD, 46));
-
+		
+		
 	}
 	
 	public void run(){
 		//dibujaNivel01();
-		dibujaNivel02();
+		//dibujaNivel02();
 		//Llamamos al método DIBUJA en la clase Marcador. Esto nos mete los DOS add en su orden correcto.
 		marcador.dibuja(this);
-	    partida.dibuja2(this);
-		while (partida.vidas>=0){
-			pelota1.muevete(this);
-			pause(5);
-			
-			if(partida.vidas<0){
-				add(gameover, 100, 200);
-			    add(go, 150, 270);
+		partida.dibuja2(this); 
+		
+			while (partida.vidas>=0){
+				pelota1.muevete(this);
+				pause(4);
+				/*if(marcador.puntuacion < 3){
+					dibujaNivel01();
+				}*/
+
+				if(partida.vidas<0){
+					add(gameover, 100, 200);
+					add(go, 150, 270);
+				}
 			}
-		}
+		
 	}
+		
+	
+	
 	
 	//El movimiento de la barra no tiene sentido que esté aquí. Hay que ponerlo en la clase barra.
 	public void mouseMoved(MouseEvent evento){
@@ -116,6 +131,7 @@ public class Arkanoid extends acm.program.GraphicsProgram{
 		}
 	}
 	
+public void 
 	
 
 }

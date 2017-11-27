@@ -10,15 +10,19 @@
 package codigo;
 
 import java.awt.Color;
+import java.util.Random;
 
 import acm.graphics.GObject;
 import acm.graphics.GOval;
+import acm.graphics.GRect;
+import acm.util.RandomGenerator;
 
 public class Pelota extends GOval{
 	
 	double xVelocidad = 1; //velocidad de la bola en el eje x.
-	double yVelocidad = -1; //velocidad en el eje y. Menos 3 porque es ascendente.
+	double yVelocidad = -1; //velocidad en el eje y. Menos 3 porque es ascendente.	
 	
+	RandomGenerator aleatorio = new RandomGenerator();
 	/**
 	 * Este es el constructor básico que es idéntido al de la clase GOval.
 	 * @param ancho
@@ -105,6 +109,8 @@ public class Pelota extends GOval{
 		
 		move(xVelocidad,yVelocidad);
 	}
+	
+
 
 	/*Queremos el método lo más genérico posible. Le preguntamos si hay algo, entonces rebota. No
 	 * hay nada, sigue. GObject en ACM es la madre de todos los objetos gráficos. Un GRect es hijo
@@ -138,10 +144,17 @@ public class Pelota extends GOval{
 			}else if(auxiliar.getX() == posX || auxiliar.getX() + auxiliar.getWidth() == posX){
 				xVelocidad*=-1;
 			}*/
-			_arkanoid.remove(auxiliar);
+			_arkanoid.remove(auxiliar);				
 			//esta parte hace la operación que suma los puntos en el marcador.
 			_arkanoid.marcador.actualizaMarcador(1);
 			noHaChocado=false;
+			if(auxiliar instanceof Ladrillo){
+				_arkanoid.bonus = new Pelota(aleatorio.nextInt(4,4),
+						aleatorio.nextInt(4,4));
+				yVelocidad=1;
+				noHaChocado=false;
+			}
+			
 			//Chequeamos la presencia de la barra.
 		}else if(auxiliar instanceof Barra){
 			//Vamos a modificar el rebote de la bola con el cursor para que no sea siempre el mismo.
@@ -165,5 +178,5 @@ public class Pelota extends GOval{
 		}
 		return noHaChocado;
 	}
-
+	
 }
