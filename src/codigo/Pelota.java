@@ -149,12 +149,9 @@ public class Pelota extends GOval{
 			_arkanoid.remove(auxiliar);				
 			//esta parte hace la operación que suma los puntos en el marcador.
 			_arkanoid.marcador.actualizaMarcador(1);
-			
-			
+		
 			noHaChocado=false;
-			
-			
-			
+
 			//Chequeamos la presencia de la barra.
 		}else if(auxiliar instanceof Barra){
 			//Vamos a modificar el rebote de la bola con el cursor para que no sea siempre el mismo.
@@ -183,6 +180,7 @@ public class Pelota extends GOval{
 		}
 		
 		return noHaChocado;
+		
 	}
 	
 	
