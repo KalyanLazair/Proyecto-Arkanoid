@@ -15,13 +15,21 @@ import acm.util.RandomGenerator;
 
 public class Bonus extends GOval{
 	
+	double yVelocidad = 1;
 	RandomGenerator aleatorio = new RandomGenerator();
 
-	public Bonus(double x, double y, double width, double height, Color _color) {
-		super(x, y, width, height);
-		
+	public Bonus(double width, Color _color) {
+		super(width, width);
+		setFilled(true);
+		setFillColor(_color);
+	}
+	
+	public void cae (Arkanoid _arkanoid){
+		move(0,yVelocidad);
 	}
 }
+
+
 		
 		
 		

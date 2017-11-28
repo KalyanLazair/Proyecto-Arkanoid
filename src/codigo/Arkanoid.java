@@ -21,7 +21,7 @@ public class Arkanoid extends acm.program.GraphicsProgram{
 	
 	//En instancia llamamos a la clase Pelota que hemos creado.
 	Pelota pelota1= new Pelota(10,Color.cyan);
-	Pelota bonus= new Pelota(4, Color.MAGENTA);
+	Bonus bonus= new Bonus(4, Color.MAGENTA);
 	
 	//Bonus bonus= new Bonus(getWidth()-getWidth()/2, getHeight(), 10, 10, Color.MAGENTA);
 	
@@ -47,7 +47,7 @@ public class Arkanoid extends acm.program.GraphicsProgram{
 	
 	GRect gameover = new GRect(400, 100);
 	GLabel go = new GLabel("");
-
+	int tempVida;
 	
 	
 	
@@ -72,28 +72,21 @@ public class Arkanoid extends acm.program.GraphicsProgram{
 		go.setColor(Color.white);
 		go.setFont(new Font("Verdana", Font.BOLD, 46));
 		
+		//add(bonus,100,100);
+		
+		
+		
 		
 	}
 	
 	public void run(){
-		//dibujaNivel01();
+		dibujaNivel01();
 		//dibujaNivel02();
 		//Llamamos al método DIBUJA en la clase Marcador. Esto nos mete los DOS add en su orden correcto.
 		marcador.dibuja(this);
 		partida.dibuja2(this); 
-			while (partida.vidas>=0){
-			    pelota1.muevete(this);
-				pause(4);
-				/*if(marcador.puntuacion < 3){
-					dibujaNivel01();
-				}*/
-
-				if(partida.vidas<0){
-					add(gameover, 100, 200);
-					add(go, 150, 270);
-				}
-			}
-		
+		tempVida = partida.vidas;
+		arrancaJuego();		
 		
 	}
 		
@@ -129,6 +122,33 @@ public class Arkanoid extends acm.program.GraphicsProgram{
 				pause(7);
 			}
 		}
+	}
+	
+	public void mouseClicked (MouseEvent evento){
+		
+		//partida.vidas--;
+		System.out.println("MouseClick");
+		System.out.println(partida.vidas);
+		System.out.println(tempVida);
+		arrancaJuego();
+	}
+	
+	public void arrancaJuego(){
+		while (partida.vidas>0){
+		    pelota1.muevete(this);
+		    bonus.cae(this);
+			pause(4);
+			
+			if(partida.vidas !=  tempVida){
+				 System.out.println("Ha bajado una vida: ");
+				 break;
+			}
+			if(partida.vidas == 0){
+				add(gameover, 100, 200);
+				add(go, 150, 270);
+			}
+		}
+		
 	}
 	
 	

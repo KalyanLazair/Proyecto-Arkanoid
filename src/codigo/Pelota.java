@@ -108,8 +108,7 @@ public class Pelota extends GOval{
 				}				
 			}
 		}
-		//move(xVelocidad,yVelocidad);
-		_arkanoid.addMouseListeners();
+		move(xVelocidad,yVelocidad);
 	}
 	
 
@@ -138,6 +137,8 @@ public class Pelota extends GOval{
 					auxiliar.getY()+auxiliar.getHeight() >= posY && auxiliar.getX()+auxiliar.getWidth() <= posX){
 				yVelocidad*=-1;
 				xVelocidad*=-1;
+				//Cuando se rompe un ladrillo cae un bonus.
+				_arkanoid.add(_arkanoid.bonus, auxiliar.getX(), auxiliar.getY());
 			}
 
 			/*if(auxiliar.getY() <=  posY && auxiliar.getY()+auxiliar.getHeight() >= posY){
@@ -148,13 +149,11 @@ public class Pelota extends GOval{
 			_arkanoid.remove(auxiliar);				
 			//esta parte hace la operación que suma los puntos en el marcador.
 			_arkanoid.marcador.actualizaMarcador(1);
+			
+			
 			noHaChocado=false;
-			if(auxiliar instanceof Ladrillo){
-				_arkanoid.bonus = new Pelota(aleatorio.nextInt(4,4),
-						aleatorio.nextInt(4,4));
-				yVelocidad=1;
-				noHaChocado=false;
-			}
+			
+			
 			
 			//Chequeamos la presencia de la barra.
 		}else if(auxiliar instanceof Barra){
@@ -176,13 +175,17 @@ public class Pelota extends GOval{
 			}
 			//Cambiamos el valor del booleano.
 			noHaChocado=false;
+		}else if(auxiliar instanceof Bonus){
+			if(auxiliar.getX() <= posX || auxiliar.getY() <= posY){
+				yVelocidad*=-1;
+				xVelocidad*=-1;
+			}
 		}
+		
 		return noHaChocado;
 	}
 	
-	public void mouseClicked(MouseEvent evento){
-		move(xVelocidad,yVelocidad);
-	}
+	
 	
 	
 }
