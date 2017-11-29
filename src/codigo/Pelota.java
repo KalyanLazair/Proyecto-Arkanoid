@@ -19,12 +19,12 @@ import acm.graphics.GRect;
 import acm.util.RandomGenerator;
 
 public class Pelota extends GOval{
-	
+
 	double xVelocidad = 1; //velocidad de la bola en el eje x.
 	double yVelocidad = -1; //velocidad en el eje y. Menos 3 porque es ascendente.	
-	
+
 	RandomGenerator aleatorio = new RandomGenerator();
-	
+
 	/**
 	 * Este es el constructor básico que es idéntido al de la clase GOval.
 	 * @param ancho
@@ -68,9 +68,9 @@ public class Pelota extends GOval{
 		}
 		setFillColor(_color);
 		setFilled(true);
-		
+
 	}
-	
+
 	/*Podemos crear un método en la bola para chequear los movimientos. En este caso si hay dos
 	 * bolas declaradas en el otro programa, las dos chequearán únicamente esta parte del código.
 	 * 
@@ -89,6 +89,8 @@ public class Pelota extends GOval{
 		if(getY()<0){
 			yVelocidad*=-1;
 		}
+		//Chequea cuando la pelota cae por la parte de abajo de la pantalla y descuenta una vida cuando eso ocurre.
+		//También resetea a la pelota en su posición inicial y le cambia las coordenadas de movimiento en el eje Y.
 		if(getY() > _arkanoid.getHeight() - getHeight()){
 			_arkanoid.pelota1.setLocation(0,_arkanoid.getHeight()*0.70 - _arkanoid.pelota1.getHeight());
 			yVelocidad*=-1;
@@ -110,7 +112,7 @@ public class Pelota extends GOval{
 		}
 		move(xVelocidad,yVelocidad);
 	}
-	
+
 
 	/*Queremos el método lo más genérico posible. Le preguntamos si hay algo, entonces rebota. No
 	 * hay nada, sigue. GObject en ACM es la madre de todos los objetos gráficos. Un GRect es hijo
@@ -138,24 +140,21 @@ public class Pelota extends GOval{
 				yVelocidad*=-1;
 				xVelocidad*=-1;
 				//Cuando se rompe un ladrillo cae un bonus.
+				//if(generaRandom(1,10) == 6){
 				_arkanoid.add(_arkanoid.bonus, auxiliar.getX(), auxiliar.getY());
+				//}
 			}
-
-			/*if(auxiliar.getY() <=  posY && auxiliar.getY()+auxiliar.getHeight() >= posY){
-				yVelocidad*=-1;
-			}else if(auxiliar.getX() == posX || auxiliar.getX() + auxiliar.getWidth() == posX){
-				xVelocidad*=-1;
-			}*/
+			//Cuando entra en contacto con un ladrillo éste desaparece.
 			_arkanoid.remove(auxiliar);				
 			//esta parte hace la operación que suma los puntos en el marcador.
 			_arkanoid.marcador.actualizaMarcador(1);
-		
+
 			noHaChocado=false;
 
 			//Chequeamos la presencia de la barra.
 		}else if(auxiliar instanceof Barra){
 			//Vamos a modificar el rebote de la bola con el cursor para que no sea siempre el mismo.
-			//Vamos a dividir el cursor en tres partes.
+			//Vamos a dividir el cursor en cinco partes.
 			//Calculamos la posición X del punto central de la bola.
 			double centroBola=getX() + getWidth()/2;
 
@@ -172,18 +171,22 @@ public class Pelota extends GOval{
 			}
 			//Cambiamos el valor del booleano.
 			noHaChocado=false;
+			//Chequea lo que ocurre cuando la bola choca contra una instancia de bonus.
 		}else if(auxiliar instanceof Bonus){
 			if(auxiliar.getX() <= posX || auxiliar.getY() <= posY){
 				yVelocidad*=-1;
 				xVelocidad*=-1;
 			}
 		}
-		
+
 		return noHaChocado;
-		
+
 	}
-	
-	
-	
-	
+
+	public int generaRandom(int low, int high){
+		int rand=aleatorio.nextInt(low,high);
+		return rand;
+	}
+
+
 }

@@ -16,81 +16,59 @@ import acm.util.RandomGenerator;
 
 public class Bonus extends GOval{
 	
-	double yVelocidad = 1;
 	RandomGenerator aleatorio = new RandomGenerator();
+	//Le damos una velocidad de +1 en el eje Y para que la bolita de bonus caiga.
+	double yVelocidad = 1;
 
 	public Bonus(double width, Color _color) {
 		super(width, width);
 		setFilled(true);
 		setFillColor(_color);
 	}
-	
+	//Función en la que la bola bonus cae a la velocidad indicada en instancia.
 	public void cae (Arkanoid _arkanoid){
 		move(0,yVelocidad);
-		chequeaContacto(getWidth(),getHeight(),_arkanoid);
+		if(chequeaContacto(getX(), getY(), _arkanoid)){//Chequeo esquina superior izquierda.
+			if(chequeaContacto(getX()+getWidth(), getY(), _arkanoid)){//Chequeo esquina superior derecha.
+				if(chequeaContacto(getX(), getY()+getHeight(), _arkanoid)){//Chequeo esquina inferior izquierda.
+					if(chequeaContacto(getX()+getWidth(), getY()+getHeight(), _arkanoid)){//Chequeo esquina inferior derecha.
+					}
+				}				
+			}
+		}
 	}
-	
-	private boolean chequeaContacto(double posX, double posY, Arkanoid _arkanoid){
+	//Aquí chequeamos el contacto con la barra.
+	public boolean chequeaContacto(double posX, double posY, Arkanoid _arkanoid){
 		boolean noContacto=true;
+		boolean segundaPelota = false;
 		GObject auxiliar;
 		auxiliar = _arkanoid.getElementAt(posX,posY);
 		
 		if(auxiliar instanceof Barra){
-			if(auxiliar.getX()+auxiliar.getWidth() >= posX+getWidth()){
-				yVelocidad*=-1;
+			//if(auxiliar.getX()+auxiliar.getWidth() >= posX+getWidth()){
+				if(generaRandom(0, 10) == 1){
 				_arkanoid.barra1.setSize(100, 20);
+				}
+				if(generaRandom(0,10) == 2){
+					_arkanoid.barra1.setSize(30,20);
+				}
+				if(generaRandom(0,10) == 3){
+					_arkanoid.add(_arkanoid.pelota2, 10,_arkanoid.getHeight()*0.70);
+					segundaPelota = true;
+				}
+				if(generaRandom(0,10) == 4){
+					
+				}
+				noContacto=false;
 				
-			}
+			//}
 			
 		}
 		return noContacto;
 	}
-}
-
-
-		
-		
-		
-		
-		/*int test = 0;
-	    int min = 1; 
-		int max = 10;
-		// Llamamos al metodo bonus para saber si toca o no
-		test = getRandom(min, max);
-		
-		if(test <= 1){ 	
-			setFillColor(_color);
-			setFilled(true);
-		}else{
-			System.out.print("Sin bonus !!");
-		
-		}
-
-		//System.out.print(test);
 	
+	public int generaRandom(int low, int high){
+		int rand=aleatorio.nextInt(low,high);
+		return rand;
 	}
-	// Calculo de numero random para saber si toca bonus
-	public int getRandom(int from, int to) {
-		
-	    if (from < to)
-	        return from + new Random().nextInt(Math.abs(to - from));
-	    return from - new Random().nextInt(Math.abs(to - from));
-	}*/
-	
-/*
-	int randomNumber = 0;
-	int minRand = 1; 
-	int maxRand = 10;
-	// Llamamos al metodo bonus para saber si toca o no
-	randomNumber = getRandom(minRand, maxRand);
-	
-	if(randomNumber <= 1){
-		_arkanoid.bonus = new Pelota(aleatorio.nextInt(4,4),
-				aleatorio.nextInt(4,4));
-		yVelocidad=1;
-	}else{
-		System.out.print("\n" + "Sin bonus !!");
-	}		*/
-	
-
-
+}

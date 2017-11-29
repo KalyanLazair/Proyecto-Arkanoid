@@ -12,19 +12,19 @@ import acm.graphics.GObject;
 import acm.graphics.GRect;
 
 public class Marcador extends GRect{
-    //Sistema del Marcador.
+	//Sistema del Marcador.
 	GLabel points = new GLabel("");
 	GLabel texto = new GLabel("");
 	int puntuacion=0;
-	
+
 	//Sistema de vidas.
 	GLabel lives = new GLabel ("");
 	GLabel partida = new GLabel("");
 	int vidas=3;
-	
+
 	public Marcador(double width, double height, Color _color) {
 		super(width, height);
-		
+
 		setFillColor(_color);
 		setFilled(true);
 		//Fuente del Marcador.
@@ -65,8 +65,8 @@ public class Marcador extends GRect{
 		_arkanoid.add(this, getX()+460, getY()+160);
 		_arkanoid.add(partida, getX()+10, getY()+30);
 	}
-	
-	
+
+
 
 
 }
