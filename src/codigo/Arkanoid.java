@@ -80,40 +80,70 @@ public class Arkanoid extends acm.program.GraphicsProgram{
 	}
 	
 	public void run(){
-		dibujaNivel01();
+		//dibujaNivel01();
 		//dibujaNivel02();
 		//Llamamos al método DIBUJA en la clase Marcador. Esto nos mete los DOS add en su orden correcto.
 		marcador.dibuja(this);
 		partida.dibuja2(this); 
-		tempVida = partida.vidas;
-		arrancaJuego();		
-		
+
+		while (partida.vidas>0 && marcador.puntuacion < 3){			
+			if(marcador.puntuacion < 3){
+				dibujaNivel01();
+				waitForClick();
+				while (partida.vidas>0 && marcador.puntuacion < 3){
+					pelota1.muevete(this);
+					bonus.cae(this);
+					pause(4);
+				}
+			}
+			if(marcador.puntuacion >= 3){
+				dibujaNivel02();
+				remove(pelota1);
+				add (pelota1, 0, getHeight()*0.70 - pelota1.getHeight());
+				waitForClick();
+				while (partida.vidas>0 && marcador.puntuacion >= 3){
+					pelota1.muevete(this);
+					bonus.cae(this);
+					pause(4);
+				}
+			}
+			if(partida.vidas == 0){
+				add(gameover, 100, 200);
+				add(go, 150, 270);
+			}
+		}
+
 	}
-		
-	
-	
-	
+
+
+
+
+
+
+
+
+
 	//El movimiento de la barra no tiene sentido que esté aquí. Hay que ponerlo en la clase barra.
 	public void mouseMoved(MouseEvent evento){
 		//getWidth es el ancho de la pantalla.
 		//getX es la X donde se encuentra el ratón. Es la X del evento, lo que produce que la barra siga al ratón.
 		barra1.mueveBarra(evento.getX(),getWidth(),this);
 	}
-	
+
 	private void dibujaNivel01(){
 		for(int j=0; j<14; j++){
 			for(int i=j; i<14; i++){               //Calcular la posición media de la pirámide.
 				Ladrillo miLadrillo = new Ladrillo(getWidth()/2 -(numLadrillos*anchoLadrillo)/2+ anchoLadrillo*i-anchoLadrillo*j/2 - espacioMenu/2,
-						                           altoLadrillo*j+altoLadrillo, 
-						                           anchoLadrillo,
-						                           altoLadrillo,
-						                           Color.pink);
+						altoLadrillo*j+altoLadrillo, 
+						anchoLadrillo,
+						altoLadrillo,
+						Color.pink);
 				add(miLadrillo);
 				pause(7);
 			}
 		}
 	}
-	
+
 	private void dibujaNivel02(){
 		for(int j=0; j<9; j++){
 			for(int i=0; i<14; i++){
@@ -123,36 +153,67 @@ public class Arkanoid extends acm.program.GraphicsProgram{
 			}
 		}
 	}
-	
-	public void mouseClicked (MouseEvent evento){
-		
+
+	/*public void mouseClicked (MouseEvent evento){
+
 		//partida.vidas--;
 		System.out.println("MouseClick");
 		System.out.println(partida.vidas);
 		System.out.println(tempVida);
 		arrancaJuego();
-	}
-	
+	}*/
+
 	public void arrancaJuego(){
+
 		while (partida.vidas>0){
-		    pelota1.muevete(this);
+			/*pelota1.muevete(this);
 		    bonus.cae(this);
-			pause(4);
-			
-			if(partida.vidas !=  tempVida){
+			pause(4);*/
+			if(marcador.puntuacion < 3){
+				dibujaNivel01();
+				while (partida.vidas>0 && marcador.puntuacion < 8){
+					pelota1.muevete(this);
+					bonus.cae(this);
+					pause(4);
+
+					/*if(partida.vidas !=  tempVida){
+						 System.out.println("Ha bajado una vida: ");
+						 break;
+					}*/
+
+				}
+				if(marcador.puntuacion >= 3){
+					dibujaNivel02();
+					while (partida.vidas>0 && marcador.puntuacion > 4){
+						pelota1.muevete(this);
+						bonus.cae(this);
+						pause(4);
+
+						/*if(partida.vidas !=  tempVida){
+							 System.out.println("Ha bajado una vida: ");
+							 break;
+						}*/
+
+					}
+				}
+
+			}
+
+			/*if(partida.vidas !=  tempVida){
 				 System.out.println("Ha bajado una vida: ");
 				 break;
-			}
+			}*/
 			if(partida.vidas == 0){
 				add(gameover, 100, 200);
 				add(go, 150, 270);
 			}
 		}
-		
-	}
-	
-	
-	
-	
 
+	}
 }
+
+
+
+
+
+

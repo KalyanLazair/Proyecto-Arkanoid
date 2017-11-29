@@ -3,6 +3,7 @@ package codigo;
 import java.awt.Color;
 import java.util.Random;
 
+import acm.graphics.GObject;
 import acm.graphics.GOval;
 import acm.util.RandomGenerator;
 
@@ -26,6 +27,23 @@ public class Bonus extends GOval{
 	
 	public void cae (Arkanoid _arkanoid){
 		move(0,yVelocidad);
+		chequeaContacto(getWidth(),getHeight(),_arkanoid);
+	}
+	
+	private boolean chequeaContacto(double posX, double posY, Arkanoid _arkanoid){
+		boolean noContacto=true;
+		GObject auxiliar;
+		auxiliar = _arkanoid.getElementAt(posX,posY);
+		
+		if(auxiliar instanceof Barra){
+			if(auxiliar.getX()+auxiliar.getWidth() >= posX+getWidth()){
+				yVelocidad*=-1;
+				_arkanoid.barra1.setSize(100, 20);
+				
+			}
+			
+		}
+		return noContacto;
 	}
 }
 
