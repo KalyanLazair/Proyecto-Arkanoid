@@ -140,9 +140,9 @@ public class Pelota extends GOval{
 				yVelocidad*=-1;
 				xVelocidad*=-1;
 				//Cuando se rompe un ladrillo cae un bonus.
-				//if(generaRandom(1,10) == 6){
-				_arkanoid.add(_arkanoid.bonus, auxiliar.getX(), auxiliar.getY());
-				//}
+				if(generaRandom(1,6) == 4){
+					_arkanoid.add(_arkanoid.bonus, auxiliar.getX(), auxiliar.getY());
+				}
 			}
 			//Cuando entra en contacto con un ladrillo éste desaparece.
 			_arkanoid.remove(auxiliar);				

@@ -15,7 +15,7 @@ import acm.util.RandomGenerator;
  * */
 
 public class Bonus extends GOval{
-	
+
 	RandomGenerator aleatorio = new RandomGenerator();
 	//Le damos una velocidad de +1 en el eje Y para que la bolita de bonus caiga.
 	double yVelocidad = 1;
@@ -40,33 +40,32 @@ public class Bonus extends GOval{
 	//Aquí chequeamos el contacto con la barra.
 	public boolean chequeaContacto(double posX, double posY, Arkanoid _arkanoid){
 		boolean noContacto=true;
-		boolean segundaPelota = false;
 		GObject auxiliar;
 		auxiliar = _arkanoid.getElementAt(posX,posY);
-		
+
 		if(auxiliar instanceof Barra){
 			//if(auxiliar.getX()+auxiliar.getWidth() >= posX+getWidth()){
-				if(generaRandom(0, 10) == 1){
+			if(generaRandom(0, 10) == 1){
 				_arkanoid.barra1.setSize(100, 20);
-				}
-				if(generaRandom(0,10) == 2){
-					_arkanoid.barra1.setSize(30,20);
-				}
-				if(generaRandom(0,10) == 3){
-					_arkanoid.add(_arkanoid.pelota2, 10,_arkanoid.getHeight()*0.70);
-					segundaPelota = true;
-				}
-				if(generaRandom(0,10) == 4){
-					
-				}
-				noContacto=false;
-				
+			}
+			if(generaRandom(0,10) == 2){
+				_arkanoid.barra1.setSize(30,20);
+			}
+			if(generaRandom(0,10) == 3){
+				_arkanoid.add(_arkanoid.pelota2, 10,_arkanoid.getHeight()*0.70);
+				_arkanoid.segundaPelota = true;
+			}
+			if(generaRandom(0,10) == 4){
+
+			}
+			noContacto=false;
+
 			//}
-			
+
 		}
 		return noContacto;
 	}
-	
+
 	public int generaRandom(int low, int high){
 		int rand=aleatorio.nextInt(low,high);
 		return rand;

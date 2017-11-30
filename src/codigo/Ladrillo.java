@@ -11,8 +11,8 @@ import acm.graphics.*;
 import acm.util.RandomGenerator;
 
 public class Ladrillo extends GRect{
-	
-	
+
+
 
 	/**
 	 * Construye un ladrillo
@@ -28,12 +28,12 @@ public class Ladrillo extends GRect{
 
 	public Ladrillo(double x, double y, double width, double height, Color _color) {
 		super(x, y, width, height);
-	    setFilled(true);
-	    setFillColor(_color);
-	  
+		setFilled(true);
+		setFillColor(_color);
+
 	}
 
 
-	
+
 
 }

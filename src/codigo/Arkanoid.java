@@ -11,6 +11,7 @@ package codigo;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.util.Random;
 
@@ -23,6 +24,8 @@ public class Arkanoid extends acm.program.GraphicsProgram{
 	Pelota pelota1= new Pelota(10,Color.cyan);
 	Bonus bonus= new Bonus(4, Color.MAGENTA);
 	Pelota pelota2 = new Pelota (10,Color.cyan);
+	//Esta booleana es para cuando aparece el bonus de segunda pelota, para que ésta se mueva.
+	boolean segundaPelota = false;
 
 	//Bonus bonus= new Bonus(getWidth()-getWidth()/2, getHeight(), 10, 10, Color.MAGENTA);
 
@@ -52,7 +55,7 @@ public class Arkanoid extends acm.program.GraphicsProgram{
 	public void init(){
 		addMouseListeners();
 		setSize(600,600);
-
+        //Se añaden la pelota y la barra.
 		add (pelota1, 0, getHeight()*0.70 - pelota1.getHeight());
 		add (barra1, 0, getHeight()*0.80);
 
@@ -90,22 +93,27 @@ public class Arkanoid extends acm.program.GraphicsProgram{
 				waitForClick();
 				while (partida.vidas>0 && marcador.puntuacion < 3){
 					pelota1.muevete(this);
-					/*if(chequeaContacto.segundaPelota == true){
+					//Booleano que nos permite el movimiento de la segunda pelota.
+					if(segundaPelota == true){
 					   pelota2.muevete(this);
-					}*/
+					}
 					bonus.cae(this);
 					pause(4);
 				}
 			}
 			if(marcador.puntuacion >= 3){
 				dibujaNivel02();
-				//Al saltar al nivel dos reiniciamos la posición de la pelota.
+				//Al saltar al nivel dos reiniciamos la posición de la pelota y variamos su eje Y.
 				remove(pelota1);
 				add (pelota1, 0, getHeight()*0.70 - pelota1.getHeight());
 				pelota1.yVelocidad*=-1;
 				waitForClick();
 				while (partida.vidas>0 && marcador.puntuacion >= 3){
 					pelota1.muevete(this);
+					//Booleano que nos permite el movimientod e la segunda pelota.
+					if(segundaPelota == true){
+						   pelota2.muevete(this);
+						}
 					bonus.cae(this);
 					pause(4);
 				}
@@ -150,54 +158,7 @@ public class Arkanoid extends acm.program.GraphicsProgram{
 		}
 	}
 
-	//Unidad de testeo de código.
-	public void arrancaJuego(){
 
-		while (partida.vidas>0){
-			/*pelota1.muevete(this);
-		    bonus.cae(this);
-			pause(4);*/
-			if(marcador.puntuacion < 3){
-				dibujaNivel01();
-				while (partida.vidas>0 && marcador.puntuacion < 8){
-					pelota1.muevete(this);
-					bonus.cae(this);
-					pause(4);
-
-					/*if(partida.vidas !=  tempVida){
-						 System.out.println("Ha bajado una vida: ");
-						 break;
-					}*/
-
-				}
-				if(marcador.puntuacion >= 3){
-					dibujaNivel02();
-					while (partida.vidas>0 && marcador.puntuacion > 4){
-						pelota1.muevete(this);
-						bonus.cae(this);
-						pause(4);
-
-						/*if(partida.vidas !=  tempVida){
-							 System.out.println("Ha bajado una vida: ");
-							 break;
-						}*/
-
-					}
-				}
-
-			}
-
-			/*if(partida.vidas !=  tempVida){
-				 System.out.println("Ha bajado una vida: ");
-				 break;
-			}*/
-			if(partida.vidas == 0){
-				add(gameover, 100, 200);
-				add(go, 150, 270);
-			}
-		}
-
-	}
 }
 
 
