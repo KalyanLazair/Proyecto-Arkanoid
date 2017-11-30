@@ -42,11 +42,11 @@ public class Marcador extends GRect{
 	//Vamos a hacer un método para que el texto del GLabel se ponga delante del rectángulo del marcador.
 	//Hacemos una llamada a Arkanoid.
 	public void dibuja(Arkanoid _arkanoid){
-		_arkanoid.add(points, getX()+440, getY()+40);
+		_arkanoid.add(points, _arkanoid.getX()+ 430, _arkanoid.getY()+40);
 		//Añadimos el rectángulo.
-		_arkanoid.add(this, getX()+460, getY()+60);
+		_arkanoid.add(this, _arkanoid.getX()+460, _arkanoid.getY()+60);
 		//Añadimos el texto.
-		_arkanoid.add(texto, getX()+10, getY()+30);
+		_arkanoid.add(texto, getX()+10, getY()+27);
 	}
 	//Método para actualizar el marcador cuando se elimine un ladrillo.
 	public void actualizaMarcador(int puntos){
@@ -61,9 +61,9 @@ public class Marcador extends GRect{
 	}
 	//Método que nos situa el marcador de vidas en la pantalla.
 	public void dibuja2(Arkanoid _arkanoid){
-		_arkanoid.add(lives, getX()+440, getY()+140);
-		_arkanoid.add(this, getX()+460, getY()+160);
-		_arkanoid.add(partida, getX()+10, getY()+30);
+		_arkanoid.add(lives, _arkanoid.getX()+440, _arkanoid.getY()+140);
+		_arkanoid.add(this, _arkanoid.getX()+460, _arkanoid.getY()+160);
+		_arkanoid.add(partida, getX()+10, getY()+27);
 	}
 
 

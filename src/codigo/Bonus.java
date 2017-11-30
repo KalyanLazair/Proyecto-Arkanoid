@@ -56,10 +56,9 @@ public class Bonus extends GOval{
 				_arkanoid.segundaPelota = true;
 			}
 			if(generaRandom(0,10) == 4){
-
+                   _arkanoid.pause(1);
 			}
 			noContacto=false;
-
 			//}
 
 		}

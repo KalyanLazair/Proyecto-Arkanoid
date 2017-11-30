@@ -27,7 +27,7 @@ public class Arkanoid extends acm.program.GraphicsProgram{
 	//Esta booleana es para cuando aparece el bonus de segunda pelota, para que ésta se mueva.
 	boolean segundaPelota = false;
 
-	//Bonus bonus= new Bonus(getWidth()-getWidth()/2, getHeight(), 10, 10, Color.MAGENTA);
+	Pelota prueba = new Pelota (40, Color.BLUE);
 
 
 	//crea el cursor del juego.
@@ -51,6 +51,10 @@ public class Arkanoid extends acm.program.GraphicsProgram{
 
 	GRect gameover = new GRect(400, 100);
 	GLabel go = new GLabel("");
+	
+	//Botón de restart.
+	
+	Boton reinicia = new Boton (110,40);
 
 	public void init(){
 		addMouseListeners();
@@ -69,18 +73,16 @@ public class Arkanoid extends acm.program.GraphicsProgram{
 		go.setLabel("GAME OVER");
 		go.setColor(Color.white);
 		go.setFont(new Font("Verdana", Font.BOLD, 46));
-
-
-
-
+		
+		//Marcadores
+		
 	}
 
 	public void run(){
-		//dibujaNivel01();
-		//dibujaNivel02();
 		//Llamamos al método DIBUJA en la clase Marcador. Esto nos mete los DOS add en su orden correcto.
 		marcador.dibuja(this);
-		partida.dibuja2(this); 
+		partida.dibuja2(this);
+		reinicia.dibuja3(this);
 		/*En esta parte está todo el código de ejecución del juego. Nos encontramos con un bucle while que se 
 		 * reproduce en tanto en cuanto las vidas permanezcan por debajo de cero. Dentro de ese while
 		 * hay dos bucles IF en los que se dibuja el nivel, el comando para que el bucle while inicie y
@@ -95,13 +97,15 @@ public class Arkanoid extends acm.program.GraphicsProgram{
 					pelota1.muevete(this);
 					//Booleano que nos permite el movimiento de la segunda pelota.
 					if(segundaPelota == true){
-					   pelota2.muevete(this);
+						pelota2.muevete(this);
 					}
 					bonus.cae(this);
 					pause(4);
 				}
 			}
 			if(marcador.puntuacion >= 3){
+				removeAll();
+				colocaTodo();
 				dibujaNivel02();
 				//Al saltar al nivel dos reiniciamos la posición de la pelota y variamos su eje Y.
 				remove(pelota1);
@@ -110,30 +114,30 @@ public class Arkanoid extends acm.program.GraphicsProgram{
 				waitForClick();
 				while (partida.vidas>0 && marcador.puntuacion >= 3){
 					pelota1.muevete(this);
-					//Booleano que nos permite el movimientod e la segunda pelota.
+					//Booleano que nos permite el movimiento de la segunda pelota.
 					if(segundaPelota == true){
-						   pelota2.muevete(this);
-						}
+						pelota2.muevete(this);
+					}
 					bonus.cae(this);
 					pause(4);
 				}
 			}
 			//Cuando las vidas se acaban nos salta una pantalla de Game Over.
 			if(partida.vidas == 0){
-				add(gameover, 100, 200);
-				add(go, 150, 270);
+				add(gameover, getWidth()/2 - gameover.getWidth()/2, getHeight()/2- gameover.getHeight()/2);
+				add(go, 140, 290);
 			}
 		}
 
 	}
 
-	
+
 	public void mouseMoved(MouseEvent evento){
 		//getWidth es el ancho de la pantalla.
 		//getX es la X donde se encuentra el ratón. Es la X del evento, lo que produce que la barra siga al ratón.
 		barra1.mueveBarra(evento.getX(),getWidth(),this);
 	}
-  //Diseño del nivel 1.
+	//Diseño del nivel 1.
 	private void dibujaNivel01(){
 		for(int j=0; j<14; j++){
 			for(int i=j; i<14; i++){               //Calcular la posición media de la pirámide.
@@ -147,7 +151,7 @@ public class Arkanoid extends acm.program.GraphicsProgram{
 			}
 		}
 	}
-   //Diseño del nivel 2.
+	//Diseño del nivel 2.
 	private void dibujaNivel02(){
 		for(int j=0; j<9; j++){
 			for(int i=0; i<14; i++){
@@ -157,7 +161,44 @@ public class Arkanoid extends acm.program.GraphicsProgram{
 			}
 		}
 	}
+	//Botón de reseteo. Resetea el juego a los valores iniciales.
 
+	public void mouseClicked (MouseEvent listener){
+		if (getElementAt(listener.getX(), listener.getY())== reinicia || 
+				getElementAt(listener.getX(), listener.getY()) == reinicia.restart){
+			removeAll();
+			marcador.actualizaMarcador(marcador.puntuacion*=0);
+			if(partida.vidas <=3){
+				partida.vidas+=3;
+				partida.actualizaVidas(3);
+				partida.vidas+=3;
+			}
+			colocaTodo();
+			dibujaNivel01();
+		}
+	}
+	//En este método recolocamos nuevamente todos los elementos del juego una vez que hemos limpiado la pantalla
+	//bien sea al terminar el juego, bien sea al perder, bien sea cuando cambiamos de nivel.
+	private void colocaTodo(){
+
+		marcador.dibuja(this);
+		partida.dibuja2(this);
+		reinicia.dibuja3(this);
+
+		add (pelota1, 0, getHeight()*0.70 - pelota1.getHeight());
+		add (barra1, 0, getHeight()*0.80);
+
+		//Barra lateral
+		GRect lateral=new GRect(3, getHeight());
+		lateral.setFilled(true);
+		add (lateral,getWidth()-espacioMenu -lateral.getWidth()-pelota1.getWidth(), 0);
+
+		//Atributos de la pantalla de Game Over.
+		gameover.setFilled(true);
+		go.setLabel("GAME OVER");
+		go.setColor(Color.white);
+		go.setFont(new Font("Verdana", Font.BOLD, 46));
+	}
 
 }
 

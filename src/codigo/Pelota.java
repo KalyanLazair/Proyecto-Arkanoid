@@ -176,6 +176,7 @@ public class Pelota extends GOval{
 			if(auxiliar.getX() <= posX || auxiliar.getY() <= posY){
 				yVelocidad*=-1;
 				xVelocidad*=-1;
+				noHaChocado=false;
 			}
 		}
 
